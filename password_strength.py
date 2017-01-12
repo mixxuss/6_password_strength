@@ -1,5 +1,5 @@
 
-
+'''
 def check_case_sens(passwd):
     if passwd == passwd.lower() or passwd == passwd.upper():
         return 0
@@ -36,15 +36,25 @@ def check_comp_name(passwd):
 
 def check_match_num(passwd):
     pass
+'''
+import zxcvbn
 
 
-def get_password_strength(password):
-    pass
 
+def get_password_strength(password, first_name, last_name):
+    results = zxcvbn.zxcvbn(password, user_inputs=[first_name, last_name])
+    print(results)
 
 if __name__ == '__main__':
     first_name = 'Alex'
+    last_name = 'Foley'
+    password = 'AlexFoley123'
+    get_password_strength(password, first_name, last_name)
+
+
+    '''first_name = 'Alex'
     last_name = 'Parker'
     passwd = '123456'
     user_name = first_name + last_name
     print(check_user_info(user_name, passwd))
+'''
