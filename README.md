@@ -1,6 +1,6 @@
 # Password Strength Calculator
 
-[TODO. There will be project description]
+This program is check password strength and print result to console
 
 # Project Goals
 
