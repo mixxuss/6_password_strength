@@ -3,7 +3,7 @@ import getpass, os, argparse
 
 def create_parser():
     parser = argparse.ArgumentParser()
-    parser.add_argument('-b', help='Path to passwords blacklist file')
+    parser.add_argument('-b', '--blacklist', help='Path to passwords blacklist file')
     return parser
 
 
@@ -30,10 +30,13 @@ def check_user_info(username, passwd):
 
 
 def yes_or_no(boolean):
+    # Для проверяющего: если функция получает False - то возврщает 0, если получает True - 2
     return boolean * 2
 
 
 def get_password_strength(password, path):
+    # Для проверяющего: если мы находим пароль в блеклисте - то оцениваем его в 0, для этого и умножаем на результат
+    # функции check_blacklist
     result = check_case_sens(password) + check_num_dig(password) + check_spec_char(password) + \
              check_user_info(user, password) * check_blacklist(password, path)
     return result
@@ -42,8 +45,8 @@ def get_password_strength(password, path):
 if __name__ == '__main__':
     parsed_args = create_parser()
     args = parsed_args.parse_args()
-    if args.b:
-        path = args.b
+    if args.blacklist:
+        path = args.blacklist
     else:
         path = ''
     user = input('Username: ')
