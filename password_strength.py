@@ -7,25 +7,25 @@ def create_parser():
     return parser
 
 
-def check_case_sens(passwd):
+def check_uppercase_letters(passwd):
     return check_condition(passwd != passwd.lower() or passwd != passwd.upper())
 
 
-def check_num_dig(passwd):
+def check_digits(passwd):
     return check_condition(any(letter.isdigit() for letter in passwd))
 
 
-def check_spec_char(passwd):
+def check_special_characters(passwd):
     return check_condition(any(letter in ('$&+,:;=?@#|\'<>.-^*()%!') for letter in passwd))
 
 
-def check_blacklist(passwd, blacklist_file):
+def check_in_blacklist(passwd, blacklist_file):
     if not os.path.exists(blacklist_file):
         return 2
     return check_condition(passwd.lower() not in open(blacklist_file).read())
 
 
-def check_user_info(username, passwd):
+def check_is_username_simillar(username, passwd):
     return check_condition(passwd.lower() not in username.lower())
 
 
@@ -36,9 +36,9 @@ def check_condition(boolean):
         return 0
 
 
-def get_password_strength(password, path):
-    result = check_case_sens(password) + check_num_dig(password) + check_spec_char(password) + \
-             check_user_info(user, password) + check_blacklist(password, path)
+def get_password_strength(user, password, path):
+    result = check_uppercase_letters(password) + check_digits(password) + check_special_characters(password) + \
+             check_is_username_simillar(user, password) + check_in_blacklist(password, path)
     return result
 
 
@@ -51,4 +51,4 @@ if __name__ == '__main__':
         path = ''
     user = input('Username: ')
     password = getpass.getpass('Password: ')
-    print('Your password score is', get_password_strength(password, path))
+    print('Your password score is', get_password_strength(user, password, path))
