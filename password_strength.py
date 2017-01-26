@@ -1,4 +1,6 @@
-import getpass, os, argparse
+import getpass
+import os
+import argparse
 
 
 def create_parser():
@@ -25,7 +27,7 @@ def check_in_blacklist(passwd, blacklist_file):
     return check_condition(passwd.lower() not in open(blacklist_file).read())
 
 
-def check_is_username_simillar(username, passwd):
+def check_is_username_similar(username, passwd):
     return check_condition(passwd.lower() not in username.lower())
 
 
@@ -38,7 +40,7 @@ def check_condition(boolean):
 
 def get_password_strength(user, password, path):
     result = check_uppercase_letters(password) + check_digits(password) + check_special_characters(password) + \
-             check_is_username_simillar(user, password) + check_in_blacklist(password, path)
+             check_is_username_similar(user, password) + check_in_blacklist(password, path)
     return result
 
 
