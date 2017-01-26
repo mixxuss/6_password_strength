@@ -10,28 +10,28 @@ def create_parser():
 
 
 def check_uppercase_letters(passwd):
-    return check_condition(passwd != passwd.lower() or passwd != passwd.upper())
+    return check_isit_true(passwd != passwd.lower() or passwd != passwd.upper())
 
 
 def check_digits(passwd):
-    return check_condition(any(letter.isdigit() for letter in passwd))
+    return check_isit_true(any(letter.isdigit() for letter in passwd))
 
 
 def check_special_characters(passwd):
-    return check_condition(any(letter in ('$&+,:;=?@#|\'<>.-^*()%!') for letter in passwd))
+    return check_isit_true(any(letter in ('$&+,:;=?@#|\'<>.-^*()%!') for letter in passwd))
 
 
 def check_in_blacklist(passwd, blacklist_file):
     if not os.path.exists(blacklist_file):
         return 2
-    return check_condition(passwd.lower() not in open(blacklist_file).read())
+    return check_isit_true(passwd.lower() not in open(blacklist_file).read())
 
 
 def check_is_username_similar(username, passwd):
-    return check_condition(passwd.lower() not in username.lower())
+    return check_isit_true(passwd.lower() not in username.lower())
 
 
-def check_condition(boolean):
+def check_isit_true(boolean):
     if boolean:
         return 2
     else:
